@@ -1,20 +1,32 @@
 import React, { useState } from 'react';
 
-function Traffic_light() {
+function TrafficLight() {
     const [color, setColor] = useState('red');
 
     const trafficLight = ['red', 'green', 'yellow', 'blue'];
 
     const changeTrafficLight = () => {
         const currentIndex = trafficLight.indexOf(color);
-
         const nextTrafficLight = trafficLight[(currentIndex + 1) % trafficLight.length];
-
         setColor(nextTrafficLight);
     };
 
-    return (
+    const handleLightClick = (clickedColor) => {
+        setColor(clickedColor);
+    };
 
+    const getLightStyle = (lightColor) => ({
+        width: '100px',
+        height: '100px',
+        borderRadius: '50%',
+        margin: '10px auto',
+        backgroundColor: lightColor,
+        boxShadow: color === lightColor ? `0 0 20px 5px ${lightColor}` : 'none',
+        cursor: 'pointer',
+        transition: 'box-shadow 0.3s ease-in-out'
+    });
+
+    return (
         <div className="container text-center mt-5">
             <h2>Traffic Light</h2>
             <button className="btn btn-outline-dark btn-lg" onClick={changeTrafficLight}>
@@ -32,34 +44,16 @@ function Traffic_light() {
                     flexDirection: 'column',
                     justifyContent: 'space-evenly',
                     alignItems: 'center',
-                    boxShadow: '0 4px 8px rgba(0,0,0,0.5)',
+                    boxShadow: '0 4px 8px rgba(0,0,0,0.5)'
                 }}
             >
-                <div className="trafficLight-container my-4">
-                    <div
-                        className={`trafficLight-light ${color === 'red' ? 'bg-danger' : 'bg-secondary'}`}
-                        style={{ width: '100px', height: '100px', borderRadius: '50%', margin: '10px auto' }}
-                    ></div>
-                    <div
-                        className={`trafficLight-light ${color === 'blue' ? 'bg-primary' : 'bg-secondary'}`}
-                        style={{ width: '100px', height: '100px', borderRadius: '50%', margin: '10px auto' }}
-                    ></div>
-                    <div
-                        className={`trafficLight-light ${color === 'yellow' ? 'bg-warning' : 'bg-secondary'}`}
-                        style={{ width: '100px', height: '100px', borderRadius: '50%', margin: '10px auto' }}
-                    ></div>
-
-                    <div
-                        className={`trafficLight-light ${color === 'green' ? 'bg-success' : 'bg-secondary'}`}
-                        style={{ width: '100px', height: '100px', borderRadius: '50%', margin: '10px auto' }}
-                    ></div>
-
-                </div>
-
+                <div className="trafficLight-light" style={getLightStyle('red')} onClick={() => handleLightClick('red')}></div>
+                <div className="trafficLight-light" style={getLightStyle('blue')} onClick={() => handleLightClick('blue')}></div>
+                <div className="trafficLight-light" style={getLightStyle('yellow')} onClick={() => handleLightClick('yellow')}></div>
+                <div className="trafficLight-light" style={getLightStyle('green')} onClick={() => handleLightClick('green')}></div>
             </div>
         </div>
-
     );
 }
 
-export default Traffic_light;
+export default TrafficLight;
